@@ -1,0 +1,10 @@
+services:
+  holiday-time:
+    image: holiday-time
+    container_name: holiday-time
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    restart: always
