@@ -1,6 +1,44 @@
+<template>
+  <div
+    class="heart-container"
+    @click="createHeart"
+    @touchstart.prevent="handleTouchStart"
+  >
+    <!-- 爱心动画元素 -->
+    <div
+      v-for="heart in hearts"
+      :key="heart.id"
+      class="heart"
+      :style="{
+        left: heart.x + 'px',
+        top: heart.y + 'px',
+        fontSize: heart.size + 'px',
+        color: heart.color,
+        animation: `heartFloat 500ms ease-out forwards`,
+      }"
+      @animationend="removeHeart(heart.id)"
+    >
+      {{ heart.icon }}
+    </div>
+
+    <!-- 示例内容区域 -->
+    <div class="content">
+      <h1 class="title">💖 点击屏幕试试看 💖</h1>
+      <p class="subtitle">在任何地方点击都会出现可爱的爱心哦～</p>
+      <p class="duration-info">每个爱心只会停留 0.5 秒就消失啦 ✨</p>
+      <div class="demo-area">
+        <div class="cute-box">
+          <span class="box-emoji">🌸</span>
+          <p>这里是示例内容</p>
+          <span class="box-emoji">🎀</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
-import NewTime from "./components/NewTime.vue";
 
 interface Heart {
   id: number;
@@ -180,36 +218,12 @@ onUnmounted(() => {
   clearAllHearts();
 });
 </script>
-<template>
-  <div
-    class="heart-container"
-    @click="createHeart"
-    @touchstart.prevent="handleTouchStart"
-  >
-    <!-- 爱心动画元素 -->
-    <div
-      v-for="heart in hearts"
-      :key="heart.id"
-      class="heart"
-      :style="{
-        left: heart.x + 'px',
-        top: heart.y + 'px',
-        fontSize: heart.size + 'px',
-        color: heart.color,
-        animation: `heartFloat 500ms ease-out forwards`,
-      }"
-      @animationend="removeHeart(heart.id)"
-    >
-      {{ heart.icon }}
-    </div>
-    <NewTime />
-  </div>
-</template>
 
 <style lang="less" scoped>
 .heart-container {
   position: relative;
   width: 100%;
+  min-height: 100vh;
   background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
   overflow: hidden;
   cursor: pointer;
